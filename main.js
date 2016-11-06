@@ -1,4 +1,5 @@
 var Discord = require("discord.js");
+var Key = require("imporantfile.js");
 
 var bot = new Discord.Client();
 
@@ -43,4 +44,4 @@ var onMessage = function(message)
 bot.on("message",onMessage);
 console.log("Logged in to Discord.")
 
-bot.login("MjQ0Njc2Njg0MDEwMzU2NzM2.CwBueQ.KJvVU9T6UcZsrNU0EQXE32Ns8w8");
+bot.login(Key.logintoken);
