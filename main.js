@@ -1,5 +1,5 @@
 var Discord = require("discord.js");
-var Key = require("imporantfile.js");
+var Key = require("./importantfile.js");
 
 var bot = new Discord.Client();
 
