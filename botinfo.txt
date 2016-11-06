@@ -1,0 +1,3 @@
+Rosetta client ID: 244676684010356736
+
+https://discordapp.com/api/oauth2/authorize?client_id=244676684010356736&scope=bot&permissions=0
