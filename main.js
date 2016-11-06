@@ -5,7 +5,7 @@ var bot = new Discord.Client();
 
 var onMessage = function(message)
 {
-	console.log("Awaiting message.");
+	console.log("Got message.");
 	//make sure servers are up
 	if(!message.guild.available){
 		console.log("Guild not available. Returning.");
