@@ -6,8 +6,12 @@ var bot = new Discord.Client();
 var onMessage = function(message)
 {
 	console.log("Got message.");
+	//console.log(message.guild.fetchMembers());
+	//console.log(JSON.stringify(message.guild));
+	
 	//make sure servers are up
-	if(!message.guild.available){
+	if(!message.guild.available)
+	{
 		console.log("Guild not available. Returning.");
 		return;
 	}
@@ -28,18 +32,35 @@ var onMessage = function(message)
 	single function for both SC and YT if it doesn't exist already).
 	Also need to handle queueing/dequeueing songs, leaving VC, etc.
 	Need to handle bad link, give user a message as to why it was bad.*/
-	else if(message.content.substring(0,3) === "-yp"){
-		message.channel.sendMessage("Sent YouTube enqueue/play message.");
-		//Make sure user is in some voice channel
-		//if(guild.channels)
-			
+	else if(message.content.substring(0,3) === "-yp")
+	{
+		message.channel.sendMessage("Sample YouTube enqueue/play message.");
+		playMusic(message);
 		//Search youtube with given terms, or link. If link, take youtube.com or youtu.be
 		//Download mp3
-		//Join channel and play
+		//Play
 	}
+	
+	/* SOUNDCLOUD
 	else if(message.content.substring(0,3) === "-sp"){
 		message.channel.sendMessage("Sent SoundCloud enqueue/play message.");
 	}
+	*/
+}
+
+var playMusic = function(message)
+{
+	message.guild.fetchMember(message.author).then(member => {
+        //console.log(JSON.stringify(member));
+        member.voiceChannel.join()
+        .then(connection => {
+            const dispatcher = connection.playFile("./noproblem.mp3");
+			console.log("Playing...");
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    });
 }
 bot.on("message",onMessage);
 console.log("Logged in to Discord.")
