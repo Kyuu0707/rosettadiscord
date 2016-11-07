@@ -1,5 +1,6 @@
 var Discord = require("discord.js");
 var Key = require("./token.js");
+var Gbf = require("./rollsim.js")
 
 var bot = new Discord.Client();
 
@@ -41,6 +42,11 @@ var onMessage = function(message)
 		//Play
 	}
 	
+	else if(message.content.substring(0,7) === "-10draw")
+	{
+		message.channel.sendMessage(Gbf.roll10());
+	}
+	
 	/* SOUNDCLOUD
 	else if(message.content.substring(0,3) === "-sp"){
 		message.channel.sendMessage("Sent SoundCloud enqueue/play message.");
@@ -54,7 +60,7 @@ var playMusic = function(message)
         //console.log(JSON.stringify(member));
         member.voiceChannel.join()
         .then(connection => {
-            const dispatcher = connection.playFile("./noproblem.mp3");
+            const dispatcher = connection.playFile("./song.mp3");
 			console.log("Playing...");
         })
         .catch(err => {
