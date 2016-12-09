@@ -53,35 +53,39 @@ var onMessage = function(message)
 	//GBF 10 draw sim
 	else if(message.content === "-10draw")
 	{
-		if (message.author.id === "131243763325468672")
+		//saber meme
+		/*if (message.author.id === "131243763325468672")
 		{
 			message.channel.sendMessage(message.author + ", you got\n" + Gbf.roll10saber());
-		}
+		}*/
 		//Q ID
 		/*else if(message.author.id === "155776304573186049")
 		{
-			console.log("meme");
 			message.channel.sendMessage(message.author + ", you got\n" + Gbf.roll10Legfest());
 		}*/
-		else
-		{
-			//message.channel.sendMessage(message.author + ", you got\n" + Gbf.roll10());
-			message.channel.sendMessage(message.author + ", you got\n" + Gbf.roll10Legfest());
-		}
+		
+		//basic
+		//message.channel.sendMessage(message.author + ", you got\n" + Gbf.roll10());
+		//6%
+		message.channel.sendMessage(message.author + ", you got\n" + Gbf.roll10Legfest());
 	}
 	
 	//GBF yolo roll sim
 	else if(message.content === "-yolo")
 	{
+		//basic
 		//message.channel.sendMessage(message.author+ ", you got\n" + Gbf.roll());
+		//6%
 		message.channel.sendMessage(message.author+ ", you got\n" + Gbf.rollLegfest());
 	}
 	
+	//vira rare crystal meme
 	else if(message.content === "-r")
 	{
 		message.channel.sendMessage("http://i.imgur.com/pldCPGl.jpg");
 	}
 	
+	//ssr kancolle harambe meme
 	else if(message.content === "-ssr")
 	{
 		message.channel.sendMessage("http://i.imgur.com/YN66Eit.jpg");
@@ -139,6 +143,7 @@ var playMusic = function(message)
     });
 }
 
+//choose random dab pic
 var dab = function()
 {
 	switch(Math.floor(Math.random()*8))
@@ -170,19 +175,20 @@ var dab = function()
 	}
 }
 
+//choose random BOI pic
 var boi = function()
 {
-	switch(Math.floor(Math.random()*1))
+	switch(Math.floor(Math.random()*3))
 	{
 		case 0:
 			return "http://i.imgur.com/HaYBGeK.jpg";
 			break;
-		/*case 1:
-			return "";
+		case 1:
+			return "http://puu.sh/sJZgo/cd78e002b5.jpg";
 			break;
 		case 2:
-			return "";
-			break;*/
+			return "http://i.imgur.com/Zbnppod.jpg";
+			break;
 	}
 }
 
