@@ -1,7 +1,9 @@
 var Discord = require("discord.js");
 var Key = require("./token.js");
 var Gbf = require("./rollsim.js")
-
+var dab = ["https://68.media.tumblr.com/ded624f61eed13f2ef204ea2a49cbac7/tumblr_o7v89xiUng1qkjs22o1_540.png", "http://i.imgur.com/HzhO1S0.jpg", "http://i.imgur.com/q3UWjcw.jpg", "https://pbs.twimg.com/media/Cop9PyZVIAAGFfI.jpg", "http://i.imgur.com/Zl0TLVb.jpg", "http://i.imgur.com/8iBC7ci.jpg", "http://puu.sh/sJYz2/4b6e451478.jpg", "http://puu.sh/sJYE2/e9d78ee368.jpg", "http://i.imgur.com/7L2FPO2.png"]
+var boi = ["http://puu.sh/sJZgo/cd78e002b5.jpg", "http://i.imgur.com/Zbnppod.jpg", "http://i.imgur.com/GoWqcSp.jpg"]
+var pout = ["http://i.imgur.com/noGSIPa.png", "http://i.imgur.com/q9HqDm5.jpg", "http://i.imgur.com/S2gP3P1.png", "http://i.imgur.com/c170WdO.png", "http://i.imgur.com/4sqDhWN.jpg", "http://i.imgur.com/muuQZb2.jpg", "http://i.imgur.com/VKkZ276.jpg", "http://i.imgur.com/4lIr5AE.gif", "http://i.imgur.com/27etcZ5.png", "http://i.imgur.com/XoDHk8x.jpg", "http://i.imgur.com/VNNPhWU.jpg", "http://i.imgur.com/vcIq1Ir.jpg","http://i.imgur.com/gpOXOX6.png", "http://i.imgur.com/joc43yk.gif", "http://i.imgur.com/QU4n9iK.gif", "http://i.imgur.com/30lZurA.png", "http://i.imgur.com/67XxCCg.jpg", "http://i.imgur.com/zlEWSJC.jpg", "http://i.imgur.com/EbpwqsK.jpg", "http://i.imgur.com/HE3FAHI.jpg", "http://i.imgur.com/DJ2p63Y.jpg"]
 var bot = new Discord.Client();
 
 var onMessage = function(message)
@@ -25,13 +27,17 @@ var onMessage = function(message)
 	
 	else if(message.content === "-dab")
 	{
-		//message.channel.sendMessage("https://68.media.tumblr.com/ded624f61eed13f2ef204ea2a49cbac7/tumblr_o7v89xiUng1qkjs22o1_540.png");
-		message.channel.sendMessage(dab());
+		message.channel.sendMessage(dab[Math.floor(Math.random()*dab.length)]);
 	}
 	
 	else if(message.content === "-boi")
 	{
-		message.channel.sendMessage(boi());
+		message.channel.sendMessage(boi[Math.floor(Math.random()*boi.length)]);
+	}
+	
+	else if(message.content === ":T")
+	{
+		message.channel.sendMessage(pout[Math.floor(Math.random()*pout.length)]);
 	}
 	
 	/*Do things for SoundCloud, YT here. Need to handle parsing link,
@@ -141,55 +147,6 @@ var playMusic = function(message)
             console.log(err);
         });
     });
-}
-
-//choose random dab pic
-var dab = function()
-{
-	switch(Math.floor(Math.random()*8))
-	{
-		case 0:
-			return "https://68.media.tumblr.com/ded624f61eed13f2ef204ea2a49cbac7/tumblr_o7v89xiUng1qkjs22o1_540.png";
-			break;
-		case 1:
-			return "http://i.imgur.com/HzhO1S0.jpg";
-			break;
-		case 2:
-			return "http://i.imgur.com/q3UWjcw.jpg";
-			break;
-		case 3:
-			return "https://pbs.twimg.com/media/Cop9PyZVIAAGFfI.jpg";
-			break;
-		case 4:
-			return "http://i.imgur.com/Zl0TLVb.jpg";
-			break;
-		case 5:
-			return "http://i.imgur.com/8iBC7ci.jpg";
-			break;
-		case 6:
-			return "http://puu.sh/sJYz2/4b6e451478.jpg";
-			break;
-		case 7:
-			return "http://puu.sh/sJYE2/e9d78ee368.jpg";
-			break;
-	}
-}
-
-//choose random BOI pic
-var boi = function()
-{
-	switch(Math.floor(Math.random()*3))
-	{
-		case 0:
-			return "http://i.imgur.com/HaYBGeK.jpg";
-			break;
-		case 1:
-			return "http://puu.sh/sJZgo/cd78e002b5.jpg";
-			break;
-		case 2:
-			return "http://i.imgur.com/Zbnppod.jpg";
-			break;
-	}
 }
 
 bot.on("message",onMessage);
