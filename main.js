@@ -1,31 +1,46 @@
-var Discord = require("discord.js");
-var Key = require("./token.js");
-var Gbf = require("./rollsim.js")
-var dab = ["https://68.media.tumblr.com/ded624f61eed13f2ef204ea2a49cbac7/tumblr_o7v89xiUng1qkjs22o1_540.png", "http://i.imgur.com/HzhO1S0.jpg", "http://i.imgur.com/q3UWjcw.jpg", "https://pbs.twimg.com/media/Cop9PyZVIAAGFfI.jpg", "http://i.imgur.com/Zl0TLVb.jpg", "http://i.imgur.com/8iBC7ci.jpg", "http://puu.sh/sJYz2/4b6e451478.jpg", "http://puu.sh/sJYE2/e9d78ee368.jpg", "http://i.imgur.com/7L2FPO2.png"]
-var boi = ["http://puu.sh/sJZgo/cd78e002b5.jpg", "http://i.imgur.com/Zbnppod.jpg", "http://i.imgur.com/GoWqcSp.jpg"]
-var pout = ["http://i.imgur.com/noGSIPa.png", "http://i.imgur.com/q9HqDm5.jpg", "http://i.imgur.com/S2gP3P1.png", "http://i.imgur.com/c170WdO.png", "http://i.imgur.com/4sqDhWN.jpg", "http://i.imgur.com/muuQZb2.jpg", "http://i.imgur.com/VKkZ276.jpg", "http://i.imgur.com/4lIr5AE.gif", "http://i.imgur.com/27etcZ5.png", "http://i.imgur.com/XoDHk8x.jpg", "http://i.imgur.com/VNNPhWU.jpg", "http://i.imgur.com/vcIq1Ir.jpg","http://i.imgur.com/gpOXOX6.png", "http://i.imgur.com/joc43yk.gif", "http://i.imgur.com/QU4n9iK.gif", "http://i.imgur.com/30lZurA.png", "http://i.imgur.com/67XxCCg.jpg", "http://i.imgur.com/zlEWSJC.jpg", "http://i.imgur.com/EbpwqsK.jpg", "http://i.imgur.com/HE3FAHI.jpg", "http://i.imgur.com/DJ2p63Y.jpg"]
-var bot = new Discord.Client();
+const Discord = require("discord.js");
+const Music = require("discord.js-music");
+const Key = require("./token.js");
+var Gbf = require("./rollsim.js");
+var dab = ["https://68.media.tumblr.com/ded624f61eed13f2ef204ea2a49cbac7/tumblr_o7v89xiUng1qkjs22o1_540.png", "http://i.imgur.com/HzhO1S0.jpg", "http://i.imgur.com/q3UWjcw.jpg", "https://pbs.twimg.com/media/Cop9PyZVIAAGFfI.jpg", "http://i.imgur.com/Zl0TLVb.jpg", "http://i.imgur.com/8iBC7ci.jpg", "http://puu.sh/sJYz2/4b6e451478.jpg", "http://puu.sh/sJYE2/e9d78ee368.jpg", "http://i.imgur.com/7L2FPO2.png","http://i.imgur.com/atpxJxy.jpg"]
+var boi = ["http://puu.sh/sJZgo/cd78e002b5.jpg", "http://i.imgur.com/Zbnppod.jpg", "http://i.imgur.com/GoWqcSp.jpg", "http://i.imgur.com/qGwOXp1.jpg", "http://i.imgur.com/gia54PH.png", "http://31.media.tumblr.com/tumblr_maanokk6PB1rt26oso1_500.gif", "http://i.imgur.com/7oSWqLq.png", "http://i.imgur.com/aTOS0Bh.jpg", "http://i.imgur.com/X86zuo4.gif", "http://i.imgur.com/P2ZM23D.gif"]
+var pout = ["http://i.imgur.com/noGSIPa.png", "http://i.imgur.com/q9HqDm5.jpg", "http://i.imgur.com/S2gP3P1.png", "http://i.imgur.com/c170WdO.png", "http://i.imgur.com/4sqDhWN.jpg", "http://i.imgur.com/muuQZb2.jpg", "http://i.imgur.com/VKkZ276.jpg", "http://i.imgur.com/4lIr5AE.gif", "http://i.imgur.com/27etcZ5.png", "http://i.imgur.com/XoDHk8x.jpg", "http://i.imgur.com/VNNPhWU.jpg", "http://i.imgur.com/vcIq1Ir.jpg","http://i.imgur.com/gpOXOX6.png", "http://i.imgur.com/joc43yk.gif", "http://i.imgur.com/QU4n9iK.gif", "http://i.imgur.com/30lZurA.png", "http://i.imgur.com/67XxCCg.jpg", "http://i.imgur.com/zlEWSJC.jpg", "http://i.imgur.com/EbpwqsK.jpg", "http://i.imgur.com/HE3FAHI.jpg", "http://i.imgur.com/DJ2p63Y.jpg", "https://i.imgur.com/Ame4YUP.gif", "https://i.imgur.com/Rwa7dlA.gif", "https://i.imgur.com/UqRUZpQ.gif", "https://i.imgur.com/ToglaeC.gif", "https://i.imgur.com/jvpql0o.gif"]
+var weewoo = ["http://i.imgur.com/gHEZ53h.jpg", "http://i.imgur.com/IcvPSmP.jpg", "http://i.imgur.com/kN07iyu.png", "http://i.imgur.com/FgkmWs2.jpg", "http://i.imgur.com/AhgtfLq.png", "http://i.imgur.com/Srd3Txc.jpg", "http://i.imgur.com/XOU7QOf.gif", "http://i.imgur.com/8WiNlc5.png","http://i.imgur.com/MPiWEPp.jpg","http://i.imgur.com/s6rzy4e.png","http://i.imgur.com/yUi9WiG.png"]
+var fight = ["http://i.imgur.com/OZZ8lI3.jpg", "http://i.imgur.com/Jl5dTor.jpg","http://i.imgur.com/YdPBmZk.png","http://i.imgur.com/W3G1KmU.gif"]
+const bot = new Discord.Client();
+/*
+//music stuff
+const music = require('discord.js-music');
+music(bot, {
+	prefix: '-',
+	global: true,
+	maxQueueSize: 20
+});
+*/
+
+
 
 var onMessage = function(message)
 {
 	console.log("Got message. " + message.author.id);
 	//console.log(message.guild.fetchMembers());
 	//console.log(JSON.stringify(message.guild));
-	
 	//make sure servers are up
 	if(!message.guild.available)
 	{
 		console.log("Guild not available. Returning.");
 		return;
 	}
-	
+
+	/*
 	if(message.content === "Hi")
 	{
 		//bot.reply(message,"Suh dude");
 		message.channel.sendMessage(message.author + ", suh dude");
 	}
+	*/
 	
-	else if(message.content === "-dab")
+	if(message.content === "-dab")
 	{
 		message.channel.sendMessage(dab[Math.floor(Math.random()*dab.length)]);
 	}
@@ -40,21 +55,17 @@ var onMessage = function(message)
 		message.channel.sendMessage(pout[Math.floor(Math.random()*pout.length)]);
 	}
 	
-	/*Do things for SoundCloud, YT here. Need to handle parsing link,
-	downloading music, playing music through voice channel (can make
-	single function for both SC and YT if it doesn't exist already).
-	Also need to handle queueing/dequeueing songs, leaving VC, etc.
-	Need to handle bad link, give user a message as to why it was bad.*/
-	
-	//THIS WILL EVENTUALLY BE YOUTUBE
-	/*else if(message.content.substring(0,3) === "-yp")
+	//don't pop lolis
+	else if(message.content === "-weewoo")
 	{
-		//message.channel.sendMessage("Sample YouTube enqueue/play message.");
-		playMusic(message);
-		//Search youtube with given terms, or link. If link, take youtube.com or youtu.be
-		//Download mp3
-		//Play
-	}*/
+		message.channel.sendMessage(weewoo[Math.floor(Math.random()*weewoo.length)]);
+	}
+	
+	//square up bitch
+	else if(message.content === "-fight")
+	{
+		message.channel.sendMessage(fight[Math.floor(Math.random()*fight.length)]);
+	}
 	
 	//GBF 10 draw sim
 	else if(message.content === "-10draw")
@@ -97,13 +108,12 @@ var onMessage = function(message)
 		message.channel.sendMessage("http://i.imgur.com/YN66Eit.jpg");
 	}
 	
-	
 	//ayy lmao
 	else if(message.content === "ayy")
 	{
 		message.channel.sendMessage("lmao");
 	}
-	
+
 	//flipchest gif
 	else if(message.content === "-flip")
 	{
@@ -122,14 +132,39 @@ var onMessage = function(message)
 		message.channel.sendMessage("http://i.imgur.com/o6D7uJf.jpg");
 	}
 	
+	else if(message.content === "rawr")
+	{
+		message.channel.sendMessage("http://i.imgur.com/c9gMEi6.gif");
+	}
+	
 	else if(message.content === "-daan")
 	{
 		message.channel.sendMessage("https://cdn.discordapp.com/attachments/199575382670835712/223691222412296192/1.gif <@149096851335938049>");
 	}
 	
+	/*Do things for SoundCloud, YT here. Need to handle parsing link,
+	downloading music, playing music through voice channel (can make
+	single function for bothh SC and YT if it doesn't exist already).
+	Also need to handle queueing/dequeueing songs, leaving VC, etc.
+	Need to handle bad link, give user a message as to why it was bad.*/
+	
+	//THIS WILL EVENTUALLY BE YOUTUBE
+	/*else if(message.content.substring(0,3) === "-yp")
+	{
+		message.channel.sendMessage("Recieved play command.");
+		playMusic(message);
+		//Parse message for search terms OR link
+		//Search youtube with given terms, or link. If link, take youtube.com or youtu.be
+		//Download mp3
+		//Play
+	}*/
+	
 	/* SOUNDCLOUD
 	else if(message.content.substring(0,3) === "-sp"){
 		message.channel.sendMessage("Sent SoundCloud enqueue/play message.");
+		//Pass message to parsing function for search terms
+		//Search SC
+		//Download and Play
 	}
 	*/
 }
@@ -140,7 +175,7 @@ var playMusic = function(message)
         //console.log(JSON.stringify(member));
         member.voiceChannel.join()
         .then(connection => {
-            const dispatcher = connection.playFile("./meme/noproblem.mp3");
+            const dispatcher = connection.playFile("./meme/file.mp3");
 			console.log("Playing...");
         })
         .catch(err => {
@@ -150,6 +185,6 @@ var playMusic = function(message)
 }
 
 bot.on("message",onMessage);
-console.log("Logged in to Discord.")
+console.log("Logged in to Discord.");
 
 bot.login(Key.logintoken);
