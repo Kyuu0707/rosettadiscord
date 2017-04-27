@@ -2,13 +2,13 @@ var rChance = .82;
 var srChance = .15;
 var ssrChance = .03;
 
-var charaSSR = ["Amira", "Cagliostro", "Charlotta", "Gawain", "Jeanne d'Arc", "Lady Grey", "Lancelot", "Nezahualpilli", "Siegfried", "Vira", "Yuel", "Agielba", "Albert", "Aletheia", "Aliza", "Altair", "Anthuria", "Aoidos", "Arriet", "Arulumaya", "Ayer", "Beatrix", "Carmelina", "Catherine", "Cerberus", "Chat Noir", "Clarisse", "De La Fille", "Eustace", "Feena", "Ferry", "Forte", "Ghandagoza", "Hallessena", "Heles", "Izmir", "Jeanne d'Arc (Dark)", "Juliet", "Korwa", "Lennah", "Lilele", "Lily", "Marquiares", "Melleau", "Mellisabelle", "Metera (Wind)", "Metera (Fire)", "Narmaya", "Nemone", "Percival", "Petra", "Razia", "Romeo", "Rosamia", "Sara", "Sarunan (Light)", "Sarunan (Dark)", "Seruel", "Silva", "Societte (Water)", "Societte (Fire)", "Sophia", "Vampy", "Vaseraga", "Veight", "Yodarha", "Yngwie", "Yuisis", "Zahlhamelina", "Zeta"];
+var charaSSR = ["Amira", "Cagliostro", "Charlotta", "Gawain", "Jeanne d'Arc", "Lady Grey", "Lancelot", "Nezahualpilli", "Siegfried", "Vira", "Yuel", "Agielba", "Albert", "Aletheia", "Aliza", "Altair", "Anthuria", "Aoidos", "Arriet", "Arulumaya", "Ayer", "Beatrix", "Carmelina", "Catherine", "Cerberus", "Chat Noir", "Clarisse", "De La Fille", "De La Fille (Earth)", "Eustace", "Feena", "Ferry", "Forte", "Ghandagoza", "Hallessena", "Heles", "Izmir", "Jeanne d'Arc (Dark)", "Juliet", "Katapillar", "Korwa", "Lennah", "Lilele", "Lily", "Marquiares", "Melleau", "Mellisabelle", "Metera (Wind)", "Metera (Fire)", "Narmaya", "Nemone", "Percival", "Petra", "Razia", "Romeo", "Rosamia", "Sara", "Sarunan (Light)", "Sarunan (Dark)", "Seruel", "Silva", "Societte (Water)", "Societte (Fire)", "Sophia", "Vampy", "Vaseraga", "Veight", "Yodarha", "Yngwie", "Yuisis", "Zahlhamelina", "Zeta", "Zeta (Dark)"];
 
-var sumSSR = ["Athena", "Macula Marius", "Medusa", "Apollo", "Vortex Dragon", "Dark Angel Olivia", "Grani", "Quetzalcoatl", "Twin Elements", "Oceanus", "Baal", "Nezha", "Siren", "Odin", "Satan", "Lich", "Cybele", "Satyr", "Neptune", "Garuda", "Prometheus", "Ca Ong", "Gilgamesh", "Morrigna", "Hector", "Anubis", "Sethlans", "Bonito", "Tezcatlipoca", "Setekh", "Typhon", "Thor"];
+var sumSSR = ["Athena", "Macula Marius", "Medusa", "Apollo", "Vortex Dragon", "Dark Angel Olivia", "Grani", "Quetzalcoatl", "Twin Elements", "Oceanus", "Baal", "Nezha", "Siren", "Odin", "Satan", "Lich", "Cybele", "Satyr", "Neptune", "Garuda", "Prometheus", "Ca Ong", "Gilgamesh", "Morrigna", "Hector", "Anubis", "Sethlans", "Bonito", "Tezcatlipoca", "Setekh", "Typhon", "Thor", "Rose Queen"];
 
-var lowWeightSumSSR = ["Agni", "Varuna", "Titan", "Zephryus", "Zeus", "Hades", "Kaguya", "Lucifer", "Bahamut", "Grand Order", "Shiva"];
+var lowWeightSumSSR = ["Agni", "Varuna", "Titan", "Zephryus", "Zeus", "Hades", "Kaguya", "Lucifer", "Bahamut", "Grand Order", "Shiva", "Godsworn Alexiel"];
 
-var ltdSSR = ["Black Knight", "Eugen", "Io", "Katalina", "Lecia", "Lucio", "Mahira", "Rackam", "Rosetta"];
+var ltdSSR = ["Black Knight", "Eugen", "Io", "Katalina", "Lecia", "Lucio", "Mahira", "Orchid", "Rackam", "Rosetta", "Sturm"];
 
 var roll = function()
 {
@@ -129,6 +129,7 @@ var roll10saber = function()
 	var list = "```html\n";
 	var number;
 	var i;
+/*
 	for(i = 0;i<10;i++){
 		number = Math.floor(Math.random()*99);
 		if(i==9 && number < 94)
@@ -151,8 +152,12 @@ var roll10saber = function()
 		{
 			list = list + "<SSR " + determineSSRsaber() + ">" + ", ";
 		}
-		//console.log(number);
 	}
+*/
+	for(i = 0;i<10;i++){
+		list = list + "<SSR " + determineSSRsaber() + ">" + ", ";
+	}
+		//console.log(number);
 	list = list.substring(0,list.length - 2) + "```";
 	console.log(list);
 	return list;
@@ -198,7 +203,7 @@ var determineSSRsaber = function()
 {
 	var rand;
 	rand = Math.floor(Math.random()*9);
-	if(rand < 9) {
+	if(rand <= 8) {
 		return "Yngwie";
 	}
 	else
