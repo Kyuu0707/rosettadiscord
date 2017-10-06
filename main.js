@@ -3,10 +3,11 @@ const fs = require("fs");
 const ytdl = require("ytdl-core");
 const streamOptions = { seek: 0, volume: 1 };
 const Key = require("./token.js");
+const Jimp = require("jimp");
 var Gbf = require("./rollsim.js");
 var dab = ["https://68.media.tumblr.com/ded624f61eed13f2ef204ea2a49cbac7/tumblr_o7v89xiUng1qkjs22o1_540.png", "http://i.imgur.com/HzhO1S0.jpg", "http://i.imgur.com/q3UWjcw.jpg", "https://pbs.twimg.com/media/Cop9PyZVIAAGFfI.jpg", "http://i.imgur.com/Zl0TLVb.jpg", "http://i.imgur.com/8iBC7ci.jpg", "http://puu.sh/sJYz2/4b6e451478.jpg", "http://puu.sh/sJYE2/e9d78ee368.jpg", "http://i.imgur.com/7L2FPO2.png","http://i.imgur.com/atpxJxy.jpg"]
 var boi = ["http://puu.sh/sJZgo/cd78e002b5.jpg", "http://i.imgur.com/Zbnppod.jpg", "http://i.imgur.com/GoWqcSp.jpg", "http://i.imgur.com/qGwOXp1.jpg", "http://i.imgur.com/gia54PH.png", "http://31.media.tumblr.com/tumblr_maanokk6PB1rt26oso1_500.gif", "http://i.imgur.com/7oSWqLq.png", "http://i.imgur.com/aTOS0Bh.jpg", "http://i.imgur.com/X86zuo4.gif", "http://i.imgur.com/P2ZM23D.gif"]
-var pout = ["http://i.imgur.com/noGSIPa.png", "http://i.imgur.com/q9HqDm5.jpg", "http://i.imgur.com/S2gP3P1.png", "http://i.imgur.com/c170WdO.png", "http://i.imgur.com/4sqDhWN.jpg", "http://i.imgur.com/muuQZb2.jpg", "http://i.imgur.com/VKkZ276.jpg", "http://i.imgur.com/4lIr5AE.gif", "http://i.imgur.com/27etcZ5.png", "http://i.imgur.com/XoDHk8x.jpg", "http://i.imgur.com/VNNPhWU.jpg", "http://i.imgur.com/vcIq1Ir.jpg","http://i.imgur.com/gpOXOX6.png", "http://i.imgur.com/joc43yk.gif", "http://i.imgur.com/QU4n9iK.gif", "http://i.imgur.com/30lZurA.png", "http://i.imgur.com/67XxCCg.jpg", "http://i.imgur.com/zlEWSJC.jpg", "http://i.imgur.com/EbpwqsK.jpg", "http://i.imgur.com/HE3FAHI.jpg", "http://i.imgur.com/DJ2p63Y.jpg", "https://i.imgur.com/Ame4YUP.gif", "https://i.imgur.com/Rwa7dlA.gif", "https://i.imgur.com/UqRUZpQ.gif", "https://i.imgur.com/ToglaeC.gif", "https://i.imgur.com/jvpql0o.gif", "http://i.imgur.com/AVbKQnW.jpg"]
+var pout = ["http://i.imgur.com/noGSIPa.png", "http://i.imgur.com/q9HqDm5.jpg", "http://i.imgur.com/S2gP3P1.png", "http://i.imgur.com/c170WdO.png", "http://i.imgur.com/4sqDhWN.jpg", "http://i.imgur.com/muuQZb2.jpg", "http://i.imgur.com/VKkZ276.jpg", "http://i.imgur.com/4lIr5AE.gif", "http://i.imgur.com/27etcZ5.png", "http://i.imgur.com/XoDHk8x.jpg", "http://i.imgur.com/VNNPhWU.jpg", "http://i.imgur.com/vcIq1Ir.jpg","http://i.imgur.com/gpOXOX6.png", "http://i.imgur.com/joc43yk.gif", "http://i.imgur.com/QU4n9iK.gif", "http://i.imgur.com/30lZurA.png", "http://i.imgur.com/67XxCCg.jpg", "http://i.imgur.com/zlEWSJC.jpg", "http://i.imgur.com/EbpwqsK.jpg", "http://i.imgur.com/HE3FAHI.jpg", "http://i.imgur.com/DJ2p63Y.jpg", "https://i.imgur.com/Ame4YUP.gif", "https://i.imgur.com/Rwa7dlA.gif", "https://i.imgur.com/UqRUZpQ.gif", "https://i.imgur.com/ToglaeC.gif", "https://i.imgur.com/jvpql0o.gif", "http://i.imgur.com/AVbKQnW.jpg", "http://i.imgur.com/oQgIoDg.png", "http://i.imgur.com/rCsXWsx.png"]
 var weewoo = ["http://i.imgur.com/gHEZ53h.jpg", "http://i.imgur.com/IcvPSmP.jpg", "http://i.imgur.com/kN07iyu.png", "http://i.imgur.com/FgkmWs2.jpg", "http://i.imgur.com/AhgtfLq.png", "http://i.imgur.com/Srd3Txc.jpg", "http://i.imgur.com/XOU7QOf.gif", "http://i.imgur.com/8WiNlc5.png","http://i.imgur.com/MPiWEPp.jpg","http://i.imgur.com/s6rzy4e.png","http://i.imgur.com/yUi9WiG.png"]
 var fight = ["http://i.imgur.com/OZZ8lI3.jpg", "http://i.imgur.com/Jl5dTor.jpg","http://i.imgur.com/YdPBmZk.png","http://i.imgur.com/W3G1KmU.gif"]
 var eightBallResponse = ["Yes.","No.","Possibly.","Potentially.","Concentrate and ask again.","Ask again later.","Highly doubtful.","Most likely.","Hahahahaha no.","Yes, definitely.","With certainty.","It is probable.","My sources tell me no.","Does a bear shit in the woods?","Maybe. Maybe not.","Absolutely.","You betcha.","Nah.","It is known.","Without a doubt."]
@@ -70,6 +71,24 @@ var onMessage = function(message)
 		message.channel.sendMessage("http://i.imgur.com/yK2EH5U.jpg");
 	}
 	
+	//y tho
+	else if(message.content === "-ytho")
+	{
+		message.channel.sendFile("./meme/ytho.jpg");
+	}
+	
+	//you look at him and tell me there's a god
+	else if(message.content === "-nogod")
+	{
+		message.channel.sendFile("./meme/nogod.jpg");
+	}
+	
+	//i wanna fuckin die
+	else if(message.content === "-iwannadie")
+	{
+		message.channel.sendFile("./meme/fuuuuck.jpg");
+	}
+	
 	//clean Ayana requests
 	else if(message.content.startsWith("=music"))
 	{
@@ -83,11 +102,6 @@ var onMessage = function(message)
 		/*if (message.author.id === "131243763325468672")
 		{
 			message.channel.sendMessage(message.author + ", you got\n" + Gbf.roll10saber());
-		}*/
-		//Q ID
-		/*else if(message.author.id === "155776304573186049")
-		{
-			message.channel.sendMessage(message.author + ", you got\n" + Gbf.roll10Legfest());
 		}*/
 		
 		//basic
@@ -140,17 +154,12 @@ var onMessage = function(message)
 	{
 		message.channel.sendMessage("lmao");
 	}
+	
 
 	//flipchest gif
 	else if(message.content === "-flip")
 	{
 		message.channel.sendMessage("http://i.imgur.com/xccBXHz.gif");
-	}
-	
-	//granblue tag everyone
-	else if(message.content === "-e")
-	{
-		message.channel.sendMessage("<@&253340396472500225> anotha one");
 	}
 	
 	///////////////////////
@@ -159,19 +168,29 @@ var onMessage = function(message)
 	else if(message.content === "-rock")
 	{
 		message.channel.sendMessage(message.author + rpsDecide(1));
-	}
-	
+	}	
 	else if(message.content === "-paper")
 	{
 		message.channel.sendMessage(message.author + rpsDecide(2));
 	}
-	
 	else if(message.content === "-scissors")
 	{
 		message.channel.sendMessage(message.author + rpsDecide(3));
 	}
 	
 	
+	/*
+	**  YEET your enemy  //holy shit fuck
+	*/
+	else if(message.content.startsWith("-yeet "))
+	{
+		imageEdit(message,"yeet");
+	}
+	
+	else if(message.content.startsWith("-slap "))
+	{
+		imageEdit(message,"slap");
+	}
 	
 	//roast
 	else if(message.content === "-roast")
@@ -186,7 +205,7 @@ var onMessage = function(message)
 	}
 	
 	//sora no method
-	else if(message.content === "-rawr")
+	else if(message.content === "-roar")
 	{
 		message.channel.sendMessage("http://i.imgur.com/c9gMEi6.gif");
 	}
@@ -426,7 +445,7 @@ var printQueue = function(message)
 }
 
 //play song hosted locally
-playLocal = function(message,song)
+var playLocal = function(message,song)
 {
 	message.guild.fetchMember(message.author).then(member => {
         //console.log(JSON.stringify(member));
@@ -448,7 +467,78 @@ var song = {
 }
 */
 
+var imageEdit = function(message,imgPrefix)
+{
+	var spl = message.content.split(" ");
+	var str = spl[1];
+	if(str.indexOf("!") !== -1)
+	{
+		var userid = str.slice(3,str.length-1);
+	}
+	else
+	{
+		var userid = str.slice(2,str.length-1);
+	}
+	var userobj = message.guild.members.get(userid);
+	var url = userobj.user.avatarURL;
+	Jimp.read(url, function(err, userAvatar) {
+		if(err)
+		{
+			console.log("error in 1st write");
+			throw err;
+		}
+		else
+		{
+			userAvatar.resize(50, 50)
+			 .quality(100)
+			 .write("./meme/avatar.jpg");
+		}
+			Jimp.read("./meme/" + imgPrefix + ".png", function(err, theImage) {
+			if(err)
+			{
+				console.log("error in 2nd write");
+				throw err;
+			}
+			else
+			{
+				if(imgPrefix === "yeet")
+				{
+					theImage.composite(userAvatar, 55, 175)
+				}
+				else if(imgPrefix === "slap")
+				{
+					theImage.composite(userAvatar, 75, 265)
+				}
+				theImage.quality(100)
+				.write("./meme/" + imgPrefix + "new.png", function(err, message) {
+					if(err)
+					{
+						console.log("failure writing second image");
+					}
+				});
+			}
+		});
+	});
+		
+	
+	setTimeout(function() {
+		if(imgPrefix === "yeet")
+		{
+			message.channel.sendFile("./meme/" + imgPrefix + "new.png",imgPrefix + ".png",spl[1] + ", ***YEET!!!***");
+		}
+		else if(imgPrefix === "slap")
+		{
+			message.channel.sendFile("./meme/" + imgPrefix + "new.png",imgPrefix + ".png",spl[1] + ", *slap!*");
+		}
+	}, 1000);
+	
+}
+
+client.on('ready', () => {
+  console.log("Logged in to Discord.");
+  client.user.setGame('with Yggdrasil');
+});
 client.on("message",onMessage);
-console.log("Logged in to Discord.");
+
 
 client.login(Key.logintoken);
