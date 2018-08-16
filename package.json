@@ -5,9 +5,15 @@
   "main": "index.js",
   "dependencies": {
     "discord.js": "^11.2.1",
-    "discord.js-music": "^1.0.3",
+    "discord.js-music": "^2.1.0",
+    "ffmetadata": "^1.5.0",
     "jimp": "^0.2.28",
-    "ytdl-core": "^0.17.1"
+    "music-metadata": "^2.4.2",
+    "node-opus": "^0.2.7",
+    "opusscript": "0.0.6",
+    "select-random-file": "^1.1.0",
+    "shuffle-array": "^1.0.1",
+    "ytdl-core": "^0.20.2"
   },
   "devDependencies": {},
   "scripts": {

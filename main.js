@@ -4,24 +4,55 @@ const ytdl = require("ytdl-core");
 const streamOptions = { seek: 0, volume: 1 };
 const Key = require("./token.js");
 const Jimp = require("jimp");
-var Gbf = require("./rollsim.js");
-var dab = ["https://68.media.tumblr.com/ded624f61eed13f2ef204ea2a49cbac7/tumblr_o7v89xiUng1qkjs22o1_540.png", "http://i.imgur.com/HzhO1S0.jpg", "http://i.imgur.com/q3UWjcw.jpg", "https://pbs.twimg.com/media/Cop9PyZVIAAGFfI.jpg", "http://i.imgur.com/Zl0TLVb.jpg", "http://i.imgur.com/8iBC7ci.jpg", "http://puu.sh/sJYz2/4b6e451478.jpg", "http://puu.sh/sJYE2/e9d78ee368.jpg", "http://i.imgur.com/7L2FPO2.png","http://i.imgur.com/atpxJxy.jpg","https://i.imgur.com/WqfPYar.png"]
-var boi = ["http://puu.sh/sJZgo/cd78e002b5.jpg", "http://i.imgur.com/Zbnppod.jpg", "http://i.imgur.com/GoWqcSp.jpg", "http://i.imgur.com/qGwOXp1.jpg", "http://i.imgur.com/gia54PH.png", "http://31.media.tumblr.com/tumblr_maanokk6PB1rt26oso1_500.gif", "http://i.imgur.com/7oSWqLq.png", "http://i.imgur.com/aTOS0Bh.jpg", "http://i.imgur.com/X86zuo4.gif", "http://i.imgur.com/P2ZM23D.gif"]
-var pout = ["http://i.imgur.com/noGSIPa.png", "http://i.imgur.com/q9HqDm5.jpg", "http://i.imgur.com/S2gP3P1.png", "http://i.imgur.com/c170WdO.png", "http://i.imgur.com/4sqDhWN.jpg", "http://i.imgur.com/muuQZb2.jpg", "http://i.imgur.com/VKkZ276.jpg", "http://i.imgur.com/4lIr5AE.gif", "http://i.imgur.com/27etcZ5.png", "http://i.imgur.com/XoDHk8x.jpg", "http://i.imgur.com/VNNPhWU.jpg", "http://i.imgur.com/vcIq1Ir.jpg","http://i.imgur.com/gpOXOX6.png", "http://i.imgur.com/joc43yk.gif", "http://i.imgur.com/QU4n9iK.gif", "http://i.imgur.com/30lZurA.png", "http://i.imgur.com/67XxCCg.jpg", "http://i.imgur.com/zlEWSJC.jpg", "http://i.imgur.com/EbpwqsK.jpg", "http://i.imgur.com/HE3FAHI.jpg", "http://i.imgur.com/DJ2p63Y.jpg", "https://i.imgur.com/Ame4YUP.gif", "https://i.imgur.com/Rwa7dlA.gif", "https://i.imgur.com/UqRUZpQ.gif", "https://i.imgur.com/ToglaeC.gif", "https://i.imgur.com/jvpql0o.gif", "http://i.imgur.com/AVbKQnW.jpg", "http://i.imgur.com/oQgIoDg.png", "http://i.imgur.com/rCsXWsx.png"]
-var weewoo = ["http://i.imgur.com/gHEZ53h.jpg", "http://i.imgur.com/IcvPSmP.jpg", "http://i.imgur.com/kN07iyu.png", "http://i.imgur.com/FgkmWs2.jpg", "http://i.imgur.com/AhgtfLq.png", "http://i.imgur.com/Srd3Txc.jpg", "http://i.imgur.com/XOU7QOf.gif", "http://i.imgur.com/8WiNlc5.png","http://i.imgur.com/MPiWEPp.jpg","http://i.imgur.com/s6rzy4e.png","http://i.imgur.com/yUi9WiG.png"]
-var fight = ["http://i.imgur.com/OZZ8lI3.jpg", "http://i.imgur.com/Jl5dTor.jpg","http://i.imgur.com/YdPBmZk.png","http://i.imgur.com/W3G1KmU.gif"]
-var eightBallResponse = ["Yes.","No.","Possibly.","Potentially.","Concentrate and ask again.","Ask again later.","Highly doubtful.","Most likely.","Hahahahaha no.","Yes, definitely.","With certainty.","It is probable.","My sources tell me no.","Does a bear shit in the woods?","Maybe. Maybe not.","Absolutely.","You betcha.","Nah.","It is known.","Without a doubt."]
-const client = new Discord.Client();
-const queue = [];
-const titles = [];
+const rf = require("select-random-file");
+const shuffle = require("shuffle-array");
+//const ffm = require("ffmetadata");
+const mm = require("music-metadata");
+const util = require('util');
 
+var Gbf = require("./rollsim.js");
+var Bandori = require("./bandorisim.js")
+var eightBallResponse = ["Yes.", "No.","Possibly.","Potentially.","Concentrate and ask again.","Ask again later.","Highly doubtful.","Most likely.","Hahahahaha no.","Yes, definitely.","With certainty.","It is probable.","My sources tell me no.","Haha yeah man","Maybe. Maybe not.","Absolutely.","You betcha.","Nah.","It is known.","Without a doubt."]
+const client = new Discord.Client();
+var queue = [];
+var titles = [];
+const LOCALDIR = "M:/BotPlaylist/"
+
+/*
+* Objects for emotes. Second is placeholder cuz messy code
+*
+*/
+const Emotes = {
+	joy: './gotoh/flandre3.png',
+	bad: './gotoh/sakuya5.png',
+	love: './gotoh/remilia4.png',
+	snooze: './gotoh/remilia1.png',
+	yeesh: './gotoh/remilia3.png',
+	smug: './gotoh/sakuya7.png',
+	drool: './gotoh/remilia7.png',
+	mad: './gotoh/flandre2.png',
+	whoa:  './gotoh/remilia8.png',
+	kimoi: './gotoh/remilia6.png',
+	happy: './gotoh/flandre6.png',
+	blush: './gotoh/flandre1.png',
+	ganbatte: './sazanamimio/59269695.png',
+	ok: './sazanamimio/59269673.png',
+	dame: './sazanamimio/59269676.png',
+	naruhodo: './sazanamimio/59269694.png'
+};
+
+const RandEmotes = {
+	dab: "a",
+	weewoo: "a",
+	police: "a",
+	boi: "a",
+	fight: "a"
+};
 
 var onMessage = function(message)
 {
 	console.log("Got message. " + message.author.id);
 
-	//console.log(message.guild.fetchMembers());
-	//console.log(JSON.stringify(message.guild));
 	//make sure servers are up
 	
 	if(!message.guild.available)
@@ -30,39 +61,50 @@ var onMessage = function(message)
 		return;
 	}
 	
-	/*if(queue.length > 0 && dispatcher.speaking === false)
-	{
-		playMusic("a " + queue[0]);
-	}*/
-	
 	//random dab
 	if(message.content === "-dab")
 	{
-		message.channel.send(dab[Math.floor(Math.random()*dab.length)]);
+		var dir = "./meme/dab/";
+		rf(dir, (err, file) => {
+			message.channel.sendFile(dir + file);	
+		})
 	}
 	
 	//random o face
 	else if(message.content === "-boi")
 	{
-		message.channel.send(boi[Math.floor(Math.random()*boi.length)]);
+		var dir = "./meme/boi/";
+		rf(dir, (err, file) => {
+			message.channel.sendFile(dir + file);	
+		})
 	}
 	
 	//random pout
 	else if(message.content === ":T")
 	{
-		message.channel.send(pout[Math.floor(Math.random()*pout.length)]);
+		var dir = "./meme/pout/";
+		rf(dir, (err, file) => {
+			message.channel.sendFile(dir + file);	
+		})
+
 	}
 	
 	//don't pop lolis
 	else if(message.content === "-weewoo")
 	{
-		message.channel.send(weewoo[Math.floor(Math.random()*weewoo.length)]);
+		var dir = "./meme/weewoo/";
+		rf(dir, (err, file) => {
+			message.channel.sendFile(dir + file);	
+		})
 	}
 	
 	//square up bitch
 	else if(message.content === "-fight")
 	{
-		message.channel.send(fight[Math.floor(Math.random()*fight.length)]);
+		var dir = "./meme/fight/";
+		rf(dir, (err, file) => {
+			message.channel.sendFile(dir + file);	
+		})
 	}
 	
 	//dishonored my family
@@ -83,12 +125,18 @@ var onMessage = function(message)
 		message.channel.sendFile("./meme/nogod.jpg");
 	}
 	
-	//i wanna fuckin die
-	else if(message.content === "-iwannadie")
+	//jacob
+	else if(message.content === "-jacob")
 	{
 		message.channel.sendFile("./meme/fuuuuck.jpg");
 	}
-	
+
+	//bitch
+	else if(message.content ==="-bitch")
+	{
+		message.channel.sendFile("./meme/bitch.jpg")
+	}
+
 	//clean Ayana requests
 	else if(message.content.startsWith("=music"))
 	{
@@ -105,10 +153,10 @@ var onMessage = function(message)
 		}*/
 		
 		//basic
-		//message.channel.send(message.author + ", you got\n" + Gbf.roll10());
+		message.channel.send(message.author + ", you got\n" + Gbf.roll10());
 		
 		//6%
-		message.channel.send(message.author + ", you got\n" + Gbf.roll10Legfest());
+		//message.channel.send(message.author + ", you got\n" + Gbf.roll10Legfest());
 	}
 	
 	//GBF yolo roll sim
@@ -117,24 +165,32 @@ var onMessage = function(message)
 		//basic
 		//message.channel.send(message.author+ ", you got\n" + Gbf.roll());
 		//6%
-		message.channel.send(message.author+ ", you got\n" + Gbf.rollLegfest());
+		message.channel.send(message.author + ", you got\n" + Gbf.rollLegfest());
+	}
+
+	//BanG Dream 10draw
+	else if(message.content === "-bd10")
+	{
+		message.channel.send(message.author + ", you got\n" + Bandori.roll10());
+
+	}
+
+	//BanG Dream yolo
+	else if(message.content == "-bdyolo")
+	{
+		message.channel.send(message.author+ ", you got\n" + Bandori.roll());
 	}
 	
 	//100 rolls
 	else if(message.content === "-100draw")
 	{
-		//saber meme
-		/*
-		if (message.author.id === "131243763325468672")
+		var str = message.author + ", you got\n";
+		for(var i = 0;i < 10; i++)
 		{
-			message.channel.send(message.author + ", you got\n" + Gbf.roll10saber() + Gbf.roll10saber() + Gbf.roll10saber() + Gbf.roll10saber() + Gbf.roll10saber() + Gbf.roll10saber() + Gbf.roll10saber() + Gbf.roll10saber() + Gbf.roll10saber() + Gbf.roll10saber());
+			str = str + Gbf.roll10();
+			//str = str + Gbf.roll10Legfest();
 		}
-		*/
-		
-		message.channel.send(message.author + ", you got\n" + Gbf.roll10Legfest() + Gbf.roll10Legfest() + Gbf.roll10Legfest() + Gbf.roll10Legfest() + Gbf.roll10Legfest() + Gbf.roll10Legfest() + Gbf.roll10Legfest() + Gbf.roll10Legfest() + Gbf.roll10Legfest() + Gbf.roll10Legfest());
-		
-		
-		
+		message.channel.send(str);	
 	}
 	
 	//vira rare crystal meme
@@ -161,23 +217,6 @@ var onMessage = function(message)
 	{
 		message.channel.send("http://i.imgur.com/xccBXHz.gif");
 	}
-	
-	///////////////////////
-	//ROCK PAPER SCISSORS//
-	///////////////////////
-	else if(message.content === "-rock")
-	{
-		message.channel.send(message.author + rpsDecide(1));
-	}	
-	else if(message.content === "-paper")
-	{
-		message.channel.send(message.author + rpsDecide(2));
-	}
-	else if(message.content === "-scissors")
-	{
-		message.channel.send(message.author + rpsDecide(3));
-	}
-	
 	
 	/*
 	**  YEET your enemy  //holy shit fuck
@@ -230,12 +269,47 @@ var onMessage = function(message)
 			message.channel.send(message.author + ", Tails!");
 		}
 	}
+
+	//calls some emote
+	else if(message.content.startsWith("-emote "))
+	{
+		var spl = message.content.split(" ");
+		var key = spl[1];
+		if(Emotes[key])
+		{
+			message.channel.send({file : Emotes[key]});
+		}
+		else if(RandEmotes[key])
+		{
+			Promise.resolve(getFile(key)).then(myfile => {
+				message.channel.send({file : myfile});
+			});
+		}
+	}
+
+	//list emotes
+	else if(message.content === "-emotes" || message.content === "-emote")
+	{
+		//message.channel.send("bad, love, snooze, yeesh, smug, drool, mad, whoa, kimoi, happy, blush, ganbatte, ok, dame, naruhodo");
+		str = "";
+		for(var key in Emotes)
+		{
+			str += key += ", ";
+		}
+		for(var key in RandEmotes)
+		{
+			str += key += ", ";
+		}
+		message.channel.send(str.substring(0,str.length-2));
+	}
 	
+	//8ball correction
 	else if(message.content === "-8ball")
 	{
 		message.channel.send(message.author + ", correct usage is '-8ball <question>'");
 	}
 	
+	//ask the 8 ball a question
 	else if(message.content.startsWith("-8ball "))
 	{
 		message.channel.send(message.author + ", " + eightBallResponse[Math.floor(Math.random()*eightBallResponse.length)]);
@@ -260,11 +334,12 @@ var onMessage = function(message)
 	}
 	
 	
+	//print the queue
 	else if(message.content === "-queue")
 	{
 		if(queue.length > 10)
 		{
-			message.channel.send("Queue is pretty long so fuck you I'm not printing it cause I don't feel like managing pages");
+			message.channel.send("Queue is too long to print xdxd");
 		}
 		else if(queue.length == 0 && message.guild.voiceConnection == null){
 			message.channel.send("Queue is empty and no song is currently playing");
@@ -301,125 +376,99 @@ var onMessage = function(message)
 	
 	else if(message.content == "-skip")
 	{
-		if(message.guild.voiceConnection != null)
+		if(message.guild.voiceConnection && message.guild.voiceConnection.dispatcher)
 		{
-			message.guild.voiceConnection.disconnect();
+			do {
+				message.guild.voiceConnection.dispatcher.end();
+
+			if(message.guild.voiceConnection == null) break;
+
+			}while(message.guild.voiceConnection.dispatcher)
+			//console.log(queue);
+			//console.log("skipped");
+			//playManyLocal(message);
 			//playMusic(message);
 		}
+
 		else
 		{
-			message.channel.send("Not currently connected.");
+			message.channel.send("Not currently playing.");
 		}
 	}
 	
-	else if(message.content === "-song")
-	{
-		//console.log("Received YouTube play command");
-		playLocal(message,"./meme/file.mp3");
-		//Parse message for search terms OR link
-		//Search youtube with given terms, or link. If link, take youtube.com or youtu.be
-		//Download mp3
-		//Play
-	}
-	
-	/*Do things for SoundCloud, YT here. Need to handle parsing link,
-	downloading music, playing music through voice channel (can make
-	single function for clienthh SC and YT if it doesn't exist already).
-	Also need to handle queueing/dequeueing songs, leaving VC, etc.
-	Need to handle bad link, give user a message as to why it was bad.*/
-	
-	
-	//YOUTUBE
-	
+	/*
+	**YOUTUBE
+	**Plays or enqueues songs from youtube
+	**
+	*/
 	else if(message.content.startsWith("-play "))
 	{
 		console.log("Received YouTube play command");
 		var spl = message.content.split(" ");
-		if(queue.length == 0)
-		{
-			enqueue(spl[1], function(){
-				playMusic(message);
-				message.delete(100);
-			});
-		}
-		else
-		{
-			enqueue(spl[1], function(){
-				console.log("enqueueing a song");
-				message.delete(100);
-			});
+		var error = checkSong(spl[1]);
 
-
-		}
-		//Parse message for search terms OR link
-		//Search youtube with given terms, or link. If link, take youtube.com or youtu.be
-		//Download mp3
-		//Play
-	}
-	
-	
-	/* SOUNDCLOUD
-	else if(message.content.substring(0,3) === "-sp"){
-		message.channel.send("Sent SoundCloud enqueue/play message.");
-		//Pass message to parsing function for search terms
-		//Search SC
-		//Download and Play
-	}
-	*/
-	
-}
-
-var rpsDecide = function(p)
-{
-	var num = Math.floor(Math.random()*3)
-	//computer rock
-	if(num === 0)
-	{
-		if(p === 1)
+		if(error)
 		{
-			return "\n:waning_gibbous_moon:\nDraw!";
-		}
-		else if(p === 2)
-		{
-			return "\n:waning_gibbous_moon:\nYou Win!";
-		}
-		else
-		{
-			return "\n:waning_gibbous_moon:\nYou Lose!";
-		}
-	}
-	//computer paper
-	else if(num === 1)
-	{
-		if(p === 1)
-		{
-			return "\n:newspaper2:\nYou Lose!";
-		}
-		else if(p === 2)
-		{
-			return "\n:newspaper2:\nDraw!";
-		}
-		else
-		{
-			return "\n:newspaper2:\nYou Win!";
+			message.channel.send("Error with link. Try again");
 		}	
-	}
-	//computer scissors
-	else
-	{
-		if(p === 1)
-		{
-			return "\n:scissors:\nYou Win!";
-		}
-		else if(p === 2)
-		{
-			return "\n:scissors:\nYou Lose!";
-		}
+		//if queue is empty, play, otherwise, enqueue	
 		else
 		{
-			return "\n:scissors:\nDraw!";
-		}	
+			if(queue.length == 0)
+			{
+				enqueue(spl[1], function(){
+					playMusic(message);
+					message.delete(100);
+				});
+			}
+			else
+			{
+				enqueue(spl[1], function(){
+					console.log("enqueueing a song");
+					message.delete(100);
+				});
+
+
+			}
+		}
 	}
+
+
+	//play a bunch of songs from my local directory
+	else if(message.content === "-playall")
+	{
+		if(queue.length > 0)
+		{
+			message.channel.sendMessage("fuck you");
+			return;
+		}
+
+		queue = fs.readdirSync(LOCALDIR);
+		//console.log(queue.length);
+		shuffle(queue);
+
+		//hahahaha
+		async function ree() 
+		{
+			for(var i = 0; i < queue.length; i++)
+			{
+				await mm.parseFile(LOCALDIR + queue[i], {native : true})
+					.then(function (metadata) {
+						//console.log(util.inspect(metadata, {showHidden: false, depth: null}));
+						//console.log(metadata['common']['title']);
+						titles[i] = (metadata['common']['artist'] || metadata['common']['albumartist'] || metadata['common']['artists']) + " - " + metadata['common']['title'];
+					})
+					.catch(function (err) {
+						console.error(err.message);
+					});
+
+			}
+		}
+		ree();
+		//console.log(titles);
+		playManyLocal(message);	
+	}
+	
 }
 
 //downloads song from youtube, throws it into queue, dequeues into NP if no NP
@@ -473,11 +522,13 @@ var playMusic = function(message)
 var enqueue = function(str,callback)
 {
 	ytdl.getInfo(str, function(err, info){
+		if(err) throw(err);
 		titles.push(info.title);
 		queue.push(str);
 		callback();
 	});
 }
+
 
 
 //print now playing + queue
@@ -493,11 +544,6 @@ var printQueue = function(message)
 	
 	for(i=1;i<queue.length;i++)
 	{
-		/*ytdl.getInfo(queue[i], function(err, info) {
-			//console.log(info.title);
-				str = str + i + ". " + info.title + "\n";
-		});
-		*/
 		str = str + i + ". " + titles[i] + "\n";
 	}
 	str = str + "```";
@@ -509,23 +555,6 @@ var printQueue = function(message)
 //prints currently playing song
 var printNP = function(message,x)
 {
-	/*var npStr;
-	ytdl.getInfo(queue[0], function(err, info){
-		npStr = (info.title);
-		if(x == 0)
-		{
-			str = "`";
-			str = str + "Now playing: " + npStr;
-			str = str + "`";
-		
-			message.channel.send(str);
-		}
-		else
-		{
-			return npStr;
-		}
-	});
-	*/
 	if(x == 0)
 	{
 		var str = "`";
@@ -539,6 +568,24 @@ var printNP = function(message,x)
 		return titles[0];
 	}
 
+}
+
+//makes sure song exists so that we can deny bad links
+var checkSong = function(str)
+{
+	try {
+	ytdl.getInfo(str, function(err, info){
+		if(err) {
+			throw(err);
+			//console.log("error getting link info: ", err);
+		}
+	});
+	} catch(ex) {
+		error = true;
+		console.log("reee error");
+		return error;
+	}
+	return false;
 }
 
 //play song hosted locally
@@ -562,13 +609,7 @@ var playLocal = function(message,song)
     });
 }
 
-/*
-var song = {
-	'title': title,
-	'url': url
-}
-*/
-
+//mess of a function, edits 2 pics for memes
 var imageEdit = function(message,imgPrefix)
 {
 	var spl = message.content.split(" ");
@@ -622,7 +663,7 @@ var imageEdit = function(message,imgPrefix)
 		});
 	});
 		
-	
+	//xD
 	setTimeout(function() {
 		if(imgPrefix === "yeet")
 		{
@@ -638,9 +679,78 @@ var imageEdit = function(message,imgPrefix)
 	
 }
 
+
+//plays songs from local dir
+var playManyLocal = function(message)
+{
+	//var spl = message.content.split(" ");
+	
+	//enqueue(spl[1]);
+	
+	message.guild.fetchMember(message.author).then(member => {
+  
+        member.voiceChannel.join()
+        .then(connection => {
+			console.log("Playing...");
+			//var toPlay = spl[1];
+
+			//console.log(queue);
+			var toPlay = queue[0];
+			//const stream = ytdl(toPlay, {filter : 'audioonly'});
+			
+			//const activeStream = connection.playStream(stream, streamOptions);
+			const activeStream = connection.playFile(LOCALDIR + toPlay,streamOptions)
+			
+			printNP(message,0);
+
+			
+			//console.log(connection);
+			activeStream.on('end', () => {
+				// End stream if empty queue, otherwise play
+				//comment one of the shifts cuz soft copy
+				queue.shift();
+				titles.shift();
+				if(queue.length == 0)
+				{
+					message.channel.send("Queue empty. Disconnecting");
+					connection.disconnect();
+				}
+				else
+				{
+					//console.log(queue);
+					function holdup() {
+						playManyLocal(message);
+					}
+					setTimeout(holdup,100);
+				}
+			})
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    });
+	
+}
+
+//gets file from local dir for meme
+function getFile(str)
+{
+	var dir = "./meme/" + str + "/";
+	return new Promise((resolve, reject) => {
+		rf(dir, (err, file) => {
+			if(err) throw(err);
+			resolve(dir + file);
+		});
+	});
+}
+
+
+
+
+
 client.on('ready', () => {
   console.log("Logged in to Discord.");
-  client.user.setGame('with Yggdrasil');
+  client.user.setActivity('with Yggdrasil', {type : 'PLAYING'});
 });
 client.on("message",onMessage);
 

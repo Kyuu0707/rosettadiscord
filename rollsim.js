@@ -6,7 +6,7 @@ var charaSSR = ["Amira", "Baotorda", "Cagliostro", "Charlotta", "Gawain", "Jeann
 
 var sumSSR = ["Athena", "Macula Marius", "Medusa", "Apollo", "Vortex Dragon", "Dark Angel Olivia", "Grani", "Quetzalcoatl", "Twin Elements", "Oceanus", "Baal", "Nezha", "Siren", "Odin", "Satan", "Lich", "Cybele", "Satyr", "Neptune", "Garuda", "Prometheus", "Ca Ong", "Gilgamesh", "Morrigna", "Hector", "Anubis", "Sethlans", "Bonito", "Tezcatlipoca", "Setekh", "Typhon", "Thor", "Rose Queen"];
 
-var lowWeightSumSSR = ["Agni", "Varuna", "Titan", "Zephryus", "Zeus", "Hades", "Kaguya", "Lucifer", "Bahamut", "Grand Order", "Shiva", "Godsworn Alexiel"];
+var lowWeightSumSSR = ["Agni", "Varuna", "Titan", "Zephryus", "Zeus", "Hades", "Kaguya", "Lucifer", "Bahamut", "Grand Order", "Shiva", "Godsworn Alexiel","Grimnir"];
 
 var ltdSSR = ["Black Knight", "Eugen", "Io", "Katalina", "Lecia", "Lucio", "Mahira", "Orchid", "Rackam", "Rosetta", "Sturm"];
 
@@ -15,7 +15,7 @@ var roll = function()
 	var str = "```html\n";
 	var appended;
 	var number;
-	number = Math.floor(Math.random()*99);
+	number = Math.floor(Math.random()*100);
 	if(number < 82)
 	{
 		appended = determineR();
@@ -36,7 +36,7 @@ var rollLegfest = function()
 	var str = "```html\n";
 	var appended;
 	var number;
-	number = Math.floor(Math.random()*99);
+	number = Math.floor(Math.random()*100);
 	if(number < 79)
 	{
 		appended = determineR();
@@ -58,7 +58,7 @@ var roll10 = function()
 	var number;
 	var i;
 	for(i = 0;i<10;i++){
-		number = Math.floor(Math.random()*99);
+		number = Math.floor(Math.random()*100);
 		if(i==9 && number < 97)
 		{
 			list = list + determineSR() + ", ";
@@ -82,7 +82,7 @@ var roll10 = function()
 		//console.log(number);
 	}
 	list = list.substring(0,list.length - 2) + "```";
-	console.log(list);
+	//console.log(list);
 	return list;
 }
 
@@ -124,45 +124,6 @@ var determineSR = function()
 	}
 }
 
-var roll10saber = function()
-{
-	var list = "```html\n";
-	var number;
-	var i;
-/*
-	for(i = 0;i<10;i++){
-		number = Math.floor(Math.random()*99);
-		if(i==9 && number < 94)
-		{
-			list = list + determineSR() + ", ";
-		}
-		else if(i==9 && number >= 94)
-		{
-			list = list + "<SSR " + determineSSRsaber() + ">" + ", ";
-		}
-		else if(number < 79)
-		{
-			list = list + determineR() + ", ";
-		}
-		else if(79 <= number && number < 94)
-		{
-			list = list + determineSR() + ", ";
-		}
-		else
-		{
-			list = list + "<SSR " + determineSSRsaber() + ">" + ", ";
-		}
-	}
-*/
-	for(i = 0;i<10;i++){
-		list = list + "<SSR " + determineSSRsaber() + ">" + ", ";
-	}
-		//console.log(number);
-	list = list.substring(0,list.length - 2) + "```";
-	console.log(list);
-	return list;
-}
-
 var roll10Legfest = function()
 {
 	var list = "```html\n";
@@ -170,7 +131,7 @@ var roll10Legfest = function()
 	var number;
 	var i;
 	for(i = 0;i<10;i++){
-		number = Math.floor(Math.random()*99);
+		number = Math.floor(Math.random()*100);
 		if(i==9 && number < 94)
 		{
 			list = list + determineSR() + ", ";
@@ -196,20 +157,6 @@ var roll10Legfest = function()
 	list = list.substring(0,list.length - 2) + "```";
 	//console.log(list);
 	return list;
-}
-
-
-var determineSSRsaber = function()
-{
-	var rand;
-	rand = Math.floor(Math.random()*9);
-	if(rand <= 8) {
-		return "Yngwie";
-	}
-	else
-	{
-		return "Varuna";
-	}
 }
 
 //SR char after weight adjustment: 72
@@ -255,7 +202,6 @@ var determineSSR = function(legfest)
 module.exports = {
 	"roll10": roll10,
 	"roll": roll,
-	"roll10saber": roll10saber,
 	"roll10Legfest": roll10Legfest,
 	"rollLegfest": rollLegfest
 }
