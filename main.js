@@ -11,12 +11,15 @@ const mm = require("music-metadata");
 const util = require('util');
 
 var Gbf = require("./rollsim.js");
-var Bandori = require("./bandorisim.js")
-var eightBallResponse = ["Yes.", "No.","Possibly.","Potentially.","Concentrate and ask again.","Ask again later.","Highly doubtful.","Most likely.","Hahahahaha no.","Yes, definitely.","With certainty.","It is probable.","My sources tell me no.","Haha yeah man","Maybe. Maybe not.","Absolutely.","You betcha.","Nah.","It is known.","Without a doubt."]
+var Bandori = require("./bandorisim.js");
+var FGO = require("./fgosim.js");
+var eightBallResponse = ["Yes.", "No.","Possibly.","Potentially.","Concentrate and ask again.","Ask again later.","Highly doubtful.","Most likely.","Hahahahaha no.","Yes, definitely.","With certainty.","It is probable.","My sources tell me no.","Haha yeah man","Maybe. Maybe not.","Absolutely.","You betcha.","Nah.","It is known.","Without a doubt."];
 const client = new Discord.Client();
 var queue = [];
 var titles = [];
-const LOCALDIR = "M:/BotPlaylist/"
+//const LOCALDIR = "M:/BotPlaylist/";
+const LOCALDIR = "M:/Temp/"
+var legfest = false;
 
 /*
 * Objects for emotes. Second is placeholder cuz messy code
@@ -38,13 +41,15 @@ const Emotes = {
 	ganbatte: './sazanamimio/59269695.png',
 	ok: './sazanamimio/59269673.png',
 	dame: './sazanamimio/59269676.png',
-	naruhodo: './sazanamimio/59269694.png'
+	naruhodo: './sazanamimio/59269694.png',
+	bless: './meme/bless.png',
+	police: './meme/police.jpg',
+	yoink: './meme/yoink.png'
 };
 
 const RandEmotes = {
 	dab: "a",
-	weewoo: "a",
-	police: "a",
+	//weewoo: "a",
 	boi: "a",
 	fight: "a"
 };
@@ -61,24 +66,6 @@ var onMessage = function(message)
 		return;
 	}
 	
-	//random dab
-	if(message.content === "-dab")
-	{
-		var dir = "./meme/dab/";
-		rf(dir, (err, file) => {
-			message.channel.sendFile(dir + file);	
-		})
-	}
-	
-	//random o face
-	else if(message.content === "-boi")
-	{
-		var dir = "./meme/boi/";
-		rf(dir, (err, file) => {
-			message.channel.sendFile(dir + file);	
-		})
-	}
-	
 	//random pout
 	else if(message.content === ":T")
 	{
@@ -87,24 +74,6 @@ var onMessage = function(message)
 			message.channel.sendFile(dir + file);	
 		})
 
-	}
-	
-	//don't pop lolis
-	else if(message.content === "-weewoo")
-	{
-		var dir = "./meme/weewoo/";
-		rf(dir, (err, file) => {
-			message.channel.sendFile(dir + file);	
-		})
-	}
-	
-	//square up bitch
-	else if(message.content === "-fight")
-	{
-		var dir = "./meme/fight/";
-		rf(dir, (err, file) => {
-			message.channel.sendFile(dir + file);	
-		})
 	}
 	
 	//dishonored my family
@@ -137,10 +106,22 @@ var onMessage = function(message)
 		message.channel.sendFile("./meme/bitch.jpg")
 	}
 
+	//sith
+	else if(message.content === "-doit")
+	{
+		message.channel.sendFile("./meme/doit.jpg")
+	}
+
 	//clean Ayana requests
 	else if(message.content.startsWith("=music"))
 	{
 		message.delete({timeout : 2000});
+	}
+
+	else if(message.content === "-togglelegfest")
+	{
+		legfest = !legfest;
+		message.channel.send("legfest = " + legfest);
 	}
 
 	//GBF 10 draw sim
@@ -152,20 +133,32 @@ var onMessage = function(message)
 			message.channel.send(message.author + ", you got\n" + Gbf.roll10saber());
 		}*/
 		
-		//basic
-		message.channel.send(message.author + ", you got\n" + Gbf.roll10());
+		if(!legfest)
+		{
+			//basic
+			message.channel.send(message.author + ", you got\n" + Gbf.roll10());
+		}
 		
-		//6%
-		//message.channel.send(message.author + ", you got\n" + Gbf.roll10Legfest());
+		else
+		{
+			//6%
+			message.channel.send(message.author + ", you got\n" + Gbf.roll10Legfest());
+		}
 	}
 	
 	//GBF yolo roll sim
 	else if(message.content === "-yolo")
 	{
-		//basic
-		//message.channel.send(message.author+ ", you got\n" + Gbf.roll());
-		//6%
-		message.channel.send(message.author + ", you got\n" + Gbf.rollLegfest());
+		if(!legfest)
+		{
+			//basic
+			message.channel.send(message.author+ ", you got\n" + Gbf.roll());
+		}
+		else
+		{
+			//6%
+			message.channel.send(message.author + ", you got\n" + Gbf.rollLegfest());
+		}
 	}
 
 	//BanG Dream 10draw
@@ -180,6 +173,19 @@ var onMessage = function(message)
 	{
 		message.channel.send(message.author+ ", you got\n" + Bandori.roll());
 	}
+
+	//FGO 10draw
+	else if(message.content === "-f10")
+	{
+		message.channel.send(message.author + ", you got\n" + FGO.roll10());
+
+	}
+
+	//FGO yolo
+	else if(message.content == "-fyolo")
+	{
+		message.channel.send(message.author+ ", you got\n" + FGO.roll());
+	}
 	
 	//100 rolls
 	else if(message.content === "-100draw")
@@ -187,8 +193,14 @@ var onMessage = function(message)
 		var str = message.author + ", you got\n";
 		for(var i = 0;i < 10; i++)
 		{
-			str = str + Gbf.roll10();
-			//str = str + Gbf.roll10Legfest();
+			if(!legfest)
+			{
+				str = str + Gbf.roll10();
+			}
+			else
+			{
+				str = str + Gbf.roll10Legfest();
+			}
 		}
 		message.channel.send(str);	
 	}
@@ -226,6 +238,7 @@ var onMessage = function(message)
 		imageEdit(message,"yeet");
 	}
 	
+	//fish
 	else if(message.content.startsWith("-slap "))
 	{
 		imageEdit(message,"slap");
@@ -259,14 +272,18 @@ var onMessage = function(message)
 	else if(message.content === "-coin")
 	{
 		var num;
-		num = Math.floor(Math.random()*2)
-		if (num === 1)
+		num = Math.floor(Math.random()*12002);
+		if (num > 6002)
 		{
 			message.channel.send(message.author + ", Heads!");
 		}
-		else
+		else if (num < 6001)
 		{
 			message.channel.send(message.author + ", Tails!");
+		}
+		else
+		{
+			message.channel.send(message.author + ", it landed on its side :thinking:");
 		}
 	}
 
