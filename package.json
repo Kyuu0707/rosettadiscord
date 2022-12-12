@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
     "discord.js": "^11.5.1",
     "discord.js-music": "^2.1.0",
     "ffmetadata": "^1.5.0",
